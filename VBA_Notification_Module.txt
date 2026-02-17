@@ -1,0 +1,44 @@
+Sub NotifyStoreOpening()
+    Dim WhatsAppMessage As String
+    Dim EmailSubject As String
+    Dim EmailBody As String
+    Dim RecipientEmail As String
+
+    ' Set recipient email for notification
+    RecipientEmail = "recipient@example.com"
+
+    ' Prepare subject and body for email notification
+    EmailSubject = "Store Opening Event Notification"
+    EmailBody = "Dear User,\n\nWe are excited to announce the opening of our new store!\n\nEvent Details:\nDate: 2026-02-18\nTime: 10:00 AM\nLocation: Main Street\n\nWe hope to see you there!\n\nBest Regards,\nStore Opening Team"
+
+    ' Prepare WhatsApp message
+    WhatsAppMessage = "🚀 Store Opening Alert!\n\nJoin us for the opening of our new store on 2026-02-18 at 10:00 AM!📍 Main Street"
+
+    ' Send email notification
+    Call SendEmail(RecipientEmail, EmailSubject, EmailBody)
+
+    ' Send WhatsApp notification
+    Call SendWhatsApp(WhatsAppMessage)
+End Sub
+
+Sub SendEmail(ByVal Recipient As String, ByVal Subject As String, ByVal Body As String)
+    ' Functionality to send an email using Outlook
+    Dim OutlookApp As Object
+    Set OutlookApp = CreateObject("Outlook.Application")
+    Dim Mail As Object
+    Set Mail = OutlookApp.CreateItem(0)
+
+    Mail.To = Recipient
+    Mail.Subject = Subject
+    Mail.Body = Body
+    Mail.Send
+End Sub
+
+Sub SendWhatsApp(ByVal Message As String)
+    ' Functionality to send a WhatsApp message using a browser automation approach
+    Dim WhatsAppURL As String
+    WhatsAppURL = "https://api.whatsapp.com/send?text=" & WorksheetFunction.EncodeURL(Message)
+
+    ' Open WhatsApp link in the default web browser
+    ThisWorkbook.FollowHyperlink WhatsAppURL
+End Sub
